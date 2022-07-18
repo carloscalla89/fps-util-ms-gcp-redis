@@ -53,7 +53,8 @@ spec:
   ports:
     - name: http
       protocol: "TCP"
-      port: #{PORT}
+      port: 80
+      targetPort: #{PORT}
   type: ClusterIP
   selector:
     app: fps-util-ms-gcp-redis
@@ -102,4 +103,4 @@ spec:
               service:
                 name: fps-util-ms-gcp-redis
                 port:
-                  number: #{PORT}
+                  number: 80
