@@ -1,0 +1,17 @@
+server:
+  port: 
+spring:
+  application:
+    name: fps-util-ms-gcp-redis
+  profiles:
+    active: ${PROFILE}
+logging:
+  config: classpath:logging/logback.xml
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics
