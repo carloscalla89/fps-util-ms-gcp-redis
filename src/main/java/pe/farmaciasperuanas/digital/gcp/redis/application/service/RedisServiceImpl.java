@@ -1,6 +1,14 @@
 package pe.farmaciasperuanas.digital.gcp.redis.application.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import pe.farmaciasperuanas.digital.gcp.redis.application.port.in.RedisService;
+import pe.farmaciasperuanas.digital.gcp.redis.application.port.out.GcpRedisService;
+import pe.farmaciasperuanas.digital.gcp.redis.domain.RequestRedisDto;
+import pe.farmaciasperuanas.digital.gcp.redis.domain.ResponseDto;
+import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 /**
  * Implement class for running Spring Boot framework.<br/>
@@ -20,7 +28,57 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Slf4j
-public class RedisServiceImpl implements RedisService{
+@Component
+public class RedisServiceImpl implements RedisService {
+
+    private GcpRedisService gcpRedisService;
+
+    public RedisServiceImpl(GcpRedisService gcpRedisService) {
+        this.gcpRedisService = gcpRedisService;
+    }
+
+    @Override
+    public Mono<ResponseDto> setObjectInCache(String key, RequestRedisDto requestCacheManagerDto) {
+        try {
+
+            gcpRedisService.set(key, requestCacheManagerDto.getPayload(), 60L);
+
+            return Mono
+                    .just(ResponseDto
+                            .builder()
+                            .saved(true)
+                            .build()
+                    );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Error during setting the cache:{}",e.getMessage());
+
+            return Mono
+                    .just(ResponseDto
+                            .builder()
+                            .saved(false)
+                            .error("Error:"+e.getMessage())
+                            .build()
+                    );
+        }
+    }
 
 
+    @Override
+    public Mono<ResponseDto> getObjectByKeyFromRedis(String key) {
+        return Optional
+                .of(gcpRedisService.exists(key))
+                .filter(val -> val)
+                .map(val -> Mono
+                        .just(ResponseDto
+                                .builder()
+                                .cacheHit(true)
+                                .data(gcpRedisService.get(key).toString())
+                                .build()
+                        )
+
+                )
+                .orElseGet(() -> Mono.just(ResponseDto.builder().cacheHit(false).build()));
+    }
 }

@@ -22,7 +22,7 @@ import org.springframework.cache.annotation.EnableCaching;
  * </ul>
  * @version 1.0
  */
-@EnableCaching
+//@EnableCaching
 @SpringBootApplication
 public class RedisApplication {
 
