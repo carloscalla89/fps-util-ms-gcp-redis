@@ -33,7 +33,12 @@ import reactor.core.publisher.Mono;
 @RestController
 public class RedisRest {
 
-  public RedisService redisService;
+  private RedisService redisService;
+
+  @Autowired
+  public RedisRest(RedisService redisService) {
+    this.redisService = redisService;
+  }
 
   /*
   @GetMapping("/hello/{name}")
