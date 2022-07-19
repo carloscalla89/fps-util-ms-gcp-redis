@@ -89,15 +89,10 @@ metadata:
     type: endpoints-app
     owner: fps
 spec:
-  tls:
-    - hosts:
-        - #{SUBDOMAIN}.#{DOMAIN}
-      secretName: #{SECRET}
   rules:
-    - host: #{SUBDOMAIN}.#{DOMAIN}
-      http:
+    - http:
         paths:
-          - path: /
+          - path: /gcp-redis
             pathType: ImplementationSpecific
             backend:
               service:
