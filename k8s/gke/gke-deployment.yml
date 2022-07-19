@@ -92,7 +92,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /gcp-redis
+          - path: /gcp-redis/*
             pathType: ImplementationSpecific
             backend:
               service:
