@@ -3,3 +3,5 @@ spring:
     type: redis
   redis:
     host: 10.191.30.3
+    port: 6379
+    database: 0
