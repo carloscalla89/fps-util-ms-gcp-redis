@@ -93,6 +93,7 @@ spec:
     - http:
         paths:
           - path: /gcp-redis/*
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: fps-util-ms-gcp-redis

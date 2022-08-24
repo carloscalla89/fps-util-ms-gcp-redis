@@ -40,7 +40,7 @@ public class RedisRest {
     this.redisService = redisService;
   }
 
-  /*
+
   @GetMapping("/hello/{name}")
   @Cacheable("hello")
   public String dummy(@PathVariable String name) throws InterruptedException {
@@ -48,8 +48,6 @@ public class RedisRest {
     Thread.sleep(5000);
     return "Hello " + name;
   }
-
-   */
 
   @GetMapping("/keys/{key}")
   public Mono<ResponseDto> getObjectFromKey(@PathVariable(value="key") String key) {
