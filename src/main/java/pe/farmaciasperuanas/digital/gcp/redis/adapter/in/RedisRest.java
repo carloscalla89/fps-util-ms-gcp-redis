@@ -81,7 +81,7 @@ public class RedisRest {
                                                @PathVariable(value="key") String key,
                                                @RequestBody RequestRedisDto requestCacheManagerDto) {
 
-    log.info("[START] setHashBytesInCache:key{}, request{}", key, requestCacheManagerDto);
+    log.info("[START] setHashBytesInCache - collection:{}, key:{}, request:{}", collection, key, requestCacheManagerDto);
 
     return cacheManagerService.setHashBytesInCache(collection, key,requestCacheManagerDto);
   }
@@ -91,17 +91,18 @@ public class RedisRest {
                                                 @PathVariable(value="key") String key,
                                                 @RequestBody RequestRedisDto requestCacheManagerDto) {
 
-    log.info("[START] setHashBytesInCache:key{}, request{}", key, requestCacheManagerDto);
+    log.info("[START] setHashBytesInCache: collection:{}, key:{}, request:{}", collection, key, requestCacheManagerDto);
 
     return cacheManagerService.setHashStringInCache(collection,key,requestCacheManagerDto);
   }
 
-  @GetMapping("/keys/{key}")
-  public Mono<ResponseDto> getHashStringFromKey(@PathVariable(value="key") String key) {
+  @GetMapping("/hashes/collections/{collection}/keys/{key}")
+  public Mono<ResponseDto> getHashStringFromKey(@PathVariable(value="collection") String collection,
+                                                @PathVariable(value="key") String key) {
 
-    log.info("[START] getObjectFromKey from REDIS:key{}", key);
+    log.info("[START] getHashStringFromKey - collection:{}, key:{}", collection, key);
 
-    return cacheManagerService.getObjectByKeyFromRedis(key);
+    return cacheManagerService.getHashStringByKeyFromRedis(collection,key);
   }
 
 }
