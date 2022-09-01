@@ -183,15 +183,18 @@ public class CacheManagerServiceImpl implements CacheManagerService {
     public Mono<ResponseDto> getHashStringByKeyFromRedis(String collection, String hashKey) {
 
         try {
-            Object object = gcpRedisService.hmGet(collection, hashKey);
 
-            return Mono
-                    .just(ResponseDto
-                            .builder()
-                            .cacheHit(true)
-                            .data(object.toString())
-                            .build()
-                    );
+            return Optional
+                    .ofNullable(gcpRedisService.hmGet(collection, hashKey))
+                    .map(val -> Mono
+                            .just(ResponseDto
+                                    .builder()
+                                    .cacheHit(true)
+                                    .data(val.toString())
+                                    .build()
+                            )
+                    )
+                    .orElseGet(() -> Mono.just(ResponseDto.builder().cacheHit(false).build()));
 
         } catch (Exception e) {
 

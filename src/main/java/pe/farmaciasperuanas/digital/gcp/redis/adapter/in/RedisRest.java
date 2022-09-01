@@ -64,7 +64,9 @@ public class RedisRest {
 
     log.info("[START] setObjectInCache:key{}, request{}", key, requestCacheManagerDto);
 
-    return cacheManagerService.setObjectInCache(key,requestCacheManagerDto);
+    return cacheManagerService
+            .setObjectInCache(key,requestCacheManagerDto)
+            .doOnSuccess(resp -> log.info("[END] setObjectInCache"));
   }
 
   @PutMapping("/bytes/keys/{key}")
@@ -73,7 +75,9 @@ public class RedisRest {
 
     log.info("[START] setBytesInCache:key{}, request{}", key, requestCacheManagerDto);
 
-    return cacheManagerService.setObjectInCache(key,requestCacheManagerDto);
+    return cacheManagerService
+            .setObjectInCache(key,requestCacheManagerDto)
+            .doOnSuccess(resp -> log.info("[END] setBytesInCache"));
   }
 
   @PutMapping("/hashes/collections/{collection}/bytes/keys/{key}")
@@ -83,7 +87,10 @@ public class RedisRest {
 
     log.info("[START] setHashBytesInCache - collection:{}, key:{}, request:{}", collection, key, requestCacheManagerDto);
 
-    return cacheManagerService.setHashBytesInCache(collection, key,requestCacheManagerDto);
+    return cacheManagerService
+            .setHashBytesInCache(collection, key,requestCacheManagerDto)
+            .doOnSuccess(resp -> log.info("[END] setHashBytesInCache"));
+
   }
 
   @PutMapping("/hashes/collections/{collection}/keys/{key}")
@@ -93,7 +100,10 @@ public class RedisRest {
 
     log.info("[START] setHashBytesInCache: collection:{}, key:{}, request:{}", collection, key, requestCacheManagerDto);
 
-    return cacheManagerService.setHashStringInCache(collection,key,requestCacheManagerDto);
+    return cacheManagerService
+            .setHashStringInCache(collection,key,requestCacheManagerDto)
+            .doOnSuccess(resp -> log.info("[END] setHashBytesInCache"));
+
   }
 
   @GetMapping("/hashes/collections/{collection}/keys/{key}")
@@ -102,7 +112,9 @@ public class RedisRest {
 
     log.info("[START] getHashStringFromKey - collection:{}, key:{}", collection, key);
 
-    return cacheManagerService.getHashStringByKeyFromRedis(collection,key);
+    return cacheManagerService
+            .getHashStringByKeyFromRedis(collection,key)
+            .doOnSuccess(resp -> log.info("[END] getHashStringFromKey"));
   }
 
 }
