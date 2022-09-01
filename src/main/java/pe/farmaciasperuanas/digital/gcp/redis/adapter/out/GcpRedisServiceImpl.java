@@ -1,5 +1,6 @@
 package pe.farmaciasperuanas.digital.gcp.redis.adapter.out;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 public class GcpRedisServiceImpl implements GcpRedisService {
 
@@ -69,13 +71,35 @@ public class GcpRedisServiceImpl implements GcpRedisService {
     }
 
     @Override
-    public void hmSet(String key, Object hashKey, Object value) {
+    public boolean hmSet(String collection, String hashKey, Object value) {
+
+        try {
+
+            redisTemplate.opsForHash().put(collection, hashKey, value);
+            return true;
+        } catch (Exception e) {
+            log.error("Unable to add object of key {} to cache collection '{}': {}",
+                    hashKey, collection, e.getMessage());
+            return false;
+        }
 
     }
 
     @Override
-    public Object hmGet(String key, Object hashKey) {
-        return null;
+    public Object hmGet(String collection, String hkey) {
+
+        try {
+
+            return redisTemplate.opsForHash().get(collection, hkey);
+
+        } catch (Exception e) {
+            if(e.getMessage() == null){
+                log.error("Entry '{}' does not exist in cache", hkey);
+            } else {
+                log.error("Unable to find entry '{}' in cache collection '{}': {}", hkey, collection, e.getMessage());
+            }
+            return null;
+        }
     }
 
     @Override

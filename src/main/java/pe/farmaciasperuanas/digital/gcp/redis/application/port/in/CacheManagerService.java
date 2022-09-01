@@ -22,10 +22,14 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 
-public interface RedisService {
+public interface CacheManagerService {
 
 
     Mono<ResponseDto> setObjectInCache(String key, RequestRedisDto requestCacheManagerDto);
+    Mono<ResponseDto> setBytesInCache(String key, RequestRedisDto requestCacheManagerDto);
+    Mono<ResponseDto> setHashBytesInCache(String collection, String key, RequestRedisDto requestCacheManagerDto);
+    Mono<ResponseDto> setHashStringInCache(String collection, String key, RequestRedisDto requestCacheManagerDto);
     Mono<ResponseDto> getObjectByKeyFromRedis(String key);
+    Mono<ResponseDto> getBytesByKeyFromRedis(String key);
 
 }

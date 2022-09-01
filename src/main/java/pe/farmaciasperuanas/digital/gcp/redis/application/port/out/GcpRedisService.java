@@ -37,19 +37,19 @@ public interface GcpRedisService {
     Object get(String key);
     /**
      * Hash agregado
-     * @param key
+     * @param collection
      * @param hashKey
      * @param value
      */
-    void hmSet(String key, Object hashKey, Object value);
+    boolean hmSet(String collection, String hashKey, Object value);
 
     /**
      * Hash para obtener datos
-     * @param key
+     * @param collection
      * @param hashKey
      * @return
      */
-    Object hmGet(String key, Object hashKey);
+    Object hmGet(String collection, String hashKey);
 
     /**
      * Lista agregada

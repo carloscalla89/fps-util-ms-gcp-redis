@@ -3,10 +3,8 @@ package pe.farmaciasperuanas.digital.gcp.redis.adapter.in;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
-import pe.farmaciasperuanas.digital.gcp.redis.application.port.in.RedisService;
+import pe.farmaciasperuanas.digital.gcp.redis.application.port.in.CacheManagerService;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.RequestRedisDto;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.ResponseDto;
 import reactor.core.publisher.Mono;
@@ -33,13 +31,14 @@ import reactor.core.publisher.Mono;
 @RestController
 public class RedisRest {
 
-  private RedisService redisService;
+  private CacheManagerService cacheManagerService;
 
   @Autowired
-  public RedisRest(RedisService redisService) {
-    this.redisService = redisService;
+  public RedisRest(CacheManagerService cacheManagerService) {
+    this.cacheManagerService = cacheManagerService;
   }
 
+  /*
 
   @GetMapping("/hello/{name}")
   @Cacheable("hello")
@@ -49,12 +48,14 @@ public class RedisRest {
     return "Hello " + name;
   }
 
+   */
+
   @GetMapping("/keys/{key}")
   public Mono<ResponseDto> getObjectFromKey(@PathVariable(value="key") String key) {
 
     log.info("[START] getObjectFromKey from REDIS:key{}", key);
 
-    return redisService.getObjectByKeyFromRedis(key);
+    return cacheManagerService.getObjectByKeyFromRedis(key);
   }
 
   @PutMapping("/keys/{key}")
@@ -63,7 +64,36 @@ public class RedisRest {
 
     log.info("[START] setObjectInCache:key{}, request{}", key, requestCacheManagerDto);
 
-    return redisService.setObjectInCache(key,requestCacheManagerDto);
+    return cacheManagerService.setObjectInCache(key,requestCacheManagerDto);
+  }
+
+  @PutMapping("/bytes/keys/{key}")
+  public Mono<ResponseDto> setBytesInCache(@PathVariable(value="key") String key,
+                                            @RequestBody RequestRedisDto requestCacheManagerDto) {
+
+    log.info("[START] setBytesInCache:key{}, request{}", key, requestCacheManagerDto);
+
+    return cacheManagerService.setObjectInCache(key,requestCacheManagerDto);
+  }
+
+  @PutMapping("/hashes/collections/{collection}/bytes/keys/{key}")
+  public Mono<ResponseDto> setHashBytesInCache(@PathVariable(value="collection") String collection,
+                                               @PathVariable(value="key") String key,
+                                               @RequestBody RequestRedisDto requestCacheManagerDto) {
+
+    log.info("[START] setHashBytesInCache:key{}, request{}", key, requestCacheManagerDto);
+
+    return cacheManagerService.setHashBytesInCache(collection, key,requestCacheManagerDto);
+  }
+
+  @PutMapping("/hashes/collections/{collection}/keys/{key}")
+  public Mono<ResponseDto> setHashStringInCache(@PathVariable(value="collection") String collection,
+                                               @PathVariable(value="key") String key,
+                                               @RequestBody RequestRedisDto requestCacheManagerDto) {
+
+    log.info("[START] setHashBytesInCache:key{}, request{}", key, requestCacheManagerDto);
+
+    return cacheManagerService.setHashStringInCache(collection,key,requestCacheManagerDto);
   }
 
 }

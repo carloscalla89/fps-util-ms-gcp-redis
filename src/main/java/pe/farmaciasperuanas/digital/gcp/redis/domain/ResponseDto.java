@@ -12,5 +12,6 @@ public class ResponseDto {
     private Boolean cacheHit;
     private Boolean saved;
     private String data;
+    private byte[] bytes;
     private String error;
 }
