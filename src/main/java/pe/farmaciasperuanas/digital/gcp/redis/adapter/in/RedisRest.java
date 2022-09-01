@@ -88,12 +88,20 @@ public class RedisRest {
 
   @PutMapping("/hashes/collections/{collection}/keys/{key}")
   public Mono<ResponseDto> setHashStringInCache(@PathVariable(value="collection") String collection,
-                                               @PathVariable(value="key") String key,
-                                               @RequestBody RequestRedisDto requestCacheManagerDto) {
+                                                @PathVariable(value="key") String key,
+                                                @RequestBody RequestRedisDto requestCacheManagerDto) {
 
     log.info("[START] setHashBytesInCache:key{}, request{}", key, requestCacheManagerDto);
 
     return cacheManagerService.setHashStringInCache(collection,key,requestCacheManagerDto);
+  }
+
+  @GetMapping("/keys/{key}")
+  public Mono<ResponseDto> getHashStringFromKey(@PathVariable(value="key") String key) {
+
+    log.info("[START] getObjectFromKey from REDIS:key{}", key);
+
+    return cacheManagerService.getObjectByKeyFromRedis(key);
   }
 
 }

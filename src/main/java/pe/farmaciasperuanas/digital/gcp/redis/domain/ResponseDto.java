@@ -13,5 +13,5 @@ public class ResponseDto {
     private Boolean saved;
     private String data;
     private byte[] bytes;
-    private String error;
+    private String message;
 }

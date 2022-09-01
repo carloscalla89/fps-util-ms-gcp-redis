@@ -49,7 +49,7 @@ public interface GcpRedisService {
      * @param hashKey
      * @return
      */
-    Object hmGet(String collection, String hashKey);
+    Object hmGet(String collection, String hashKey) throws Exception;
 
     /**
      * Lista agregada

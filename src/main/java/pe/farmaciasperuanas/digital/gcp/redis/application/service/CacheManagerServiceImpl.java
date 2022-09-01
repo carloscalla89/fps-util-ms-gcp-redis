@@ -58,7 +58,7 @@ public class CacheManagerServiceImpl implements CacheManagerService {
                     .just(ResponseDto
                             .builder()
                             .saved(false)
-                            .error("Error:"+e.getMessage())
+                            .message("Error:"+e.getMessage())
                             .build()
                     );
         }
@@ -85,7 +85,7 @@ public class CacheManagerServiceImpl implements CacheManagerService {
                     .just(ResponseDto
                             .builder()
                             .saved(false)
-                            .error("Error:"+e.getMessage())
+                            .message("Error:"+e.getMessage())
                             .build()
                     );
         }
@@ -112,7 +112,7 @@ public class CacheManagerServiceImpl implements CacheManagerService {
                     .just(ResponseDto
                             .builder()
                             .saved(false)
-                            .error("Error:"+e.getMessage())
+                            .message("Error:"+e.getMessage())
                             .build()
                     );
         }
@@ -139,7 +139,7 @@ public class CacheManagerServiceImpl implements CacheManagerService {
                     .just(ResponseDto
                             .builder()
                             .saved(false)
-                            .error("Error:"+e.getMessage())
+                            .message("Error:"+e.getMessage())
                             .build()
                     );
         }
@@ -177,5 +177,30 @@ public class CacheManagerServiceImpl implements CacheManagerService {
 
                 )
                 .orElseGet(() -> Mono.just(ResponseDto.builder().cacheHit(false).build()));
+    }
+
+    @Override
+    public Mono<ResponseDto> getHashStringByKeyFromRedis(String collection, String hashKey) {
+
+        try {
+            Object object = gcpRedisService.hmGet(collection, hashKey);
+
+            return Mono
+                    .just(ResponseDto
+                            .builder()
+                            .cacheHit(true)
+                            .data(object.toString())
+                            .build()
+                    );
+
+        } catch (Exception e) {
+
+            log.error("Error during getting hashkey:{}",e.getMessage());
+
+            return Mono
+                    .just(ResponseDto.builder().cacheHit(false).message(e.getMessage()).build());
+
+        }
+
     }
 }

@@ -86,7 +86,7 @@ public class GcpRedisServiceImpl implements GcpRedisService {
     }
 
     @Override
-    public Object hmGet(String collection, String hkey) {
+    public Object hmGet(String collection, String hkey) throws Exception {
 
         try {
 
@@ -95,10 +95,15 @@ public class GcpRedisServiceImpl implements GcpRedisService {
         } catch (Exception e) {
             if(e.getMessage() == null){
                 log.error("Entry '{}' does not exist in cache", hkey);
+
+                throw new Exception("Entry " + hkey +" does not exist in cache");
+
             } else {
                 log.error("Unable to find entry '{}' in cache collection '{}': {}", hkey, collection, e.getMessage());
+
+                throw new Exception("Unable to find entry " + hkey + " in cache collection " + collection + ": " + e.getMessage());
             }
-            return null;
+
         }
     }
 
