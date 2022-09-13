@@ -40,8 +40,8 @@ public class GcpRedisServiceImpl implements GcpRedisService {
 
     @Override
     public Long deleteHashkey(String key, Object... hashKeys) throws Exception {
-
-        return redisTemplate.opsForHash().delete("key",hashKeys);
+        log.info("deleteHashKey - key:{}, hashKeys:{}",key,hashKeys);
+        return redisTemplate.opsForHash().delete(key,hashKeys);
 
     }
 
