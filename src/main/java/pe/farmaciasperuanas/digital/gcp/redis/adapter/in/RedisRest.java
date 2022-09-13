@@ -68,7 +68,7 @@ public class RedisRest {
 
     return cacheManagerService
             .setHashStringInCache(collection,key,requestCacheManagerDto)
-            .doOnSuccess(resp -> log.info("[END] setHashBytesInCache"));
+            .doOnSuccess(resp -> log.info("[END] setHashBytesInCache:{}",resp));
 
   }
 
@@ -80,7 +80,7 @@ public class RedisRest {
 
     return cacheManagerService
             .getHashStringByKeyFromRedis(collection,key)
-            .doOnSuccess(resp -> log.info("[END] getHashStringFromKey"));
+            .doOnSuccess(resp -> log.info("[END] getHashStringFromKey:{}",resp));
   }
 
   @DeleteMapping("/hashes/collections/{collection}/keys/{keys}")
