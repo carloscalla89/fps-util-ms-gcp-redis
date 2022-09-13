@@ -6,5 +6,6 @@ import lombok.Data;
 public class RequestRedisDto {
 
     private String payload;
-    private byte[] data;
+    private String payloadBase64;
+    private Integer expireTime;
 }

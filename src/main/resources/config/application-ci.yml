@@ -5,3 +5,6 @@ spring:
     host: 10.191.30.3
     port: 6379
     database: 0
+  data:
+    mongodb:
+      uri: mongodb+srv://root:elpreciomasbajo@clustertest.kcun4.mongodb.net/util?authSource=admin&retryWrites=true&w=majority&maxPoolSize=2500&maxIdleTimeMS=20000

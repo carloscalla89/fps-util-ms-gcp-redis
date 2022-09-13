@@ -7,7 +7,9 @@ public interface GcpRedisService {
 
     boolean set(String key, Object value);
 
-    boolean set(String key, Object value, Long expireTime);
+    boolean set(String key, Object value, Long expireTime) throws  Exception;
+
+    Long deleteHashkey(String key, Object... hashKeys) throws Exception;
 
     void remove(String... keys);
 
@@ -41,7 +43,7 @@ public interface GcpRedisService {
      * @param hashKey
      * @param value
      */
-    boolean hmSet(String collection, String hashKey, Object value);
+    void hmSet(String collection, String hashKey, Object value) throws Exception;
 
     /**
      * Hash para obtener datos

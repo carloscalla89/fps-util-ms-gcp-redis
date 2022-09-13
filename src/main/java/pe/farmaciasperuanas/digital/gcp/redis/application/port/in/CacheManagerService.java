@@ -26,11 +26,9 @@ public interface CacheManagerService {
 
 
     Mono<ResponseDto> setObjectInCache(String key, RequestRedisDto requestCacheManagerDto);
-    Mono<ResponseDto> setBytesInCache(String key, RequestRedisDto requestCacheManagerDto);
-    Mono<ResponseDto> setHashBytesInCache(String collection, String key, RequestRedisDto requestCacheManagerDto);
     Mono<ResponseDto> setHashStringInCache(String collection, String key, RequestRedisDto requestCacheManagerDto);
     Mono<ResponseDto> getObjectByKeyFromRedis(String key);
-    Mono<ResponseDto> getBytesByKeyFromRedis(String key);
     Mono<ResponseDto> getHashStringByKeyFromRedis(String collection, String hashKey);
+    Mono<ResponseDto> deleteHashKey(String collection, String hashKeys);
 
 }

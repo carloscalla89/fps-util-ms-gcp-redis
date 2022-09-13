@@ -42,23 +42,6 @@ public class RedisConfig {
         return new LettuceConnectionFactory(redisStandaloneConfiguration, configuration);
     }
 
-    /*
-    @Bean
-    @ConditionalOnMissingBean(name = "redisTemplate")
-    @Primary
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-
-        // configurar redisTemplate
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setKeySerializer (new StringRedisSerializer()); // serialización de claves
-        redisTemplate.setValueSerializer (new GenericJackson2JsonRedisSerializer()); // serialización de valores
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
-        redisTemplate.afterPropertiesSet();
-
-        return redisTemplate;
-    }
-
-     */
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")

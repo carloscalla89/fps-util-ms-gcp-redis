@@ -9,6 +9,8 @@ import pe.farmaciasperuanas.digital.gcp.redis.domain.RequestRedisDto;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.ResponseDto;
 import reactor.core.publisher.Mono;
 
+import java.util.Base64;
+
 /**
  * Controlador principal que expone el servicio a trav&eacute;s de HTTP/Rest para
  * las operaciones del recurso Redis<br/>
@@ -38,18 +40,6 @@ public class RedisRest {
     this.cacheManagerService = cacheManagerService;
   }
 
-  /*
-
-  @GetMapping("/hello/{name}")
-  @Cacheable("hello")
-  public String dummy(@PathVariable String name) throws InterruptedException {
-
-    Thread.sleep(5000);
-    return "Hello " + name;
-  }
-
-   */
-
   @GetMapping("/keys/{key}")
   public Mono<ResponseDto> getObjectFromKey(@PathVariable(value="key") String key) {
 
@@ -67,30 +57,6 @@ public class RedisRest {
     return cacheManagerService
             .setObjectInCache(key,requestCacheManagerDto)
             .doOnSuccess(resp -> log.info("[END] setObjectInCache"));
-  }
-
-  @PutMapping("/bytes/keys/{key}")
-  public Mono<ResponseDto> setBytesInCache(@PathVariable(value="key") String key,
-                                            @RequestBody RequestRedisDto requestCacheManagerDto) {
-
-    log.info("[START] setBytesInCache:key{}, request{}", key, requestCacheManagerDto);
-
-    return cacheManagerService
-            .setObjectInCache(key,requestCacheManagerDto)
-            .doOnSuccess(resp -> log.info("[END] setBytesInCache"));
-  }
-
-  @PutMapping("/hashes/collections/{collection}/bytes/keys/{key}")
-  public Mono<ResponseDto> setHashBytesInCache(@PathVariable(value="collection") String collection,
-                                               @PathVariable(value="key") String key,
-                                               @RequestBody RequestRedisDto requestCacheManagerDto) {
-
-    log.info("[START] setHashBytesInCache - collection:{}, key:{}, request:{}", collection, key, requestCacheManagerDto);
-
-    return cacheManagerService
-            .setHashBytesInCache(collection, key,requestCacheManagerDto)
-            .doOnSuccess(resp -> log.info("[END] setHashBytesInCache"));
-
   }
 
   @PutMapping("/hashes/collections/{collection}/keys/{key}")
@@ -115,6 +81,18 @@ public class RedisRest {
     return cacheManagerService
             .getHashStringByKeyFromRedis(collection,key)
             .doOnSuccess(resp -> log.info("[END] getHashStringFromKey"));
+  }
+
+  @DeleteMapping("/hashes/collections/{collection}/keys/{keys}")
+  public Mono<ResponseDto> deleteHashKey(@PathVariable(value="collection") String collection,
+                                         @PathVariable(value="keys") String keys) {
+
+    log.info("[START] deleteHashKey: collection:{}, key:{}", collection, keys);
+
+    return cacheManagerService
+            .deleteHashKey(collection,keys)
+            .doOnSuccess(resp -> log.info("[END] deleteHashKey"));
+
   }
 
 }

@@ -29,17 +29,20 @@ public class GcpRedisServiceImpl implements GcpRedisService {
     }
 
     @Override
-    public boolean set(String key, Object value, Long expireTime) {
-        boolean result = false;
-        try {
-            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
-            operations.set(key, value);
-            redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+    public boolean set(String key, Object value, Long expireTime) throws Exception{
+
+        ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+        operations.set(key, value);
+        redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
+
+        return true;
+    }
+
+    @Override
+    public Long deleteHashkey(String key, Object... hashKeys) throws Exception {
+
+        return redisTemplate.opsForHash().delete("key",hashKeys);
+
     }
 
     @Override
@@ -54,6 +57,8 @@ public class GcpRedisServiceImpl implements GcpRedisService {
 
     @Override
     public void remove(String key) {
+
+
 
     }
 
@@ -71,18 +76,9 @@ public class GcpRedisServiceImpl implements GcpRedisService {
     }
 
     @Override
-    public boolean hmSet(String collection, String hashKey, Object value) {
+    public void hmSet(String collection, String hashKey, Object value) throws Exception{
 
-        try {
-
-            redisTemplate.opsForHash().put(collection, hashKey, value);
-            return true;
-        } catch (Exception e) {
-            log.error("Unable to add object of key {} to cache collection '{}': {}",
-                    hashKey, collection, e.getMessage());
-            return false;
-        }
-
+        redisTemplate.opsForHash().put(collection, hashKey, value);
     }
 
     @Override
