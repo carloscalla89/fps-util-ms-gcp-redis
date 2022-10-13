@@ -1,5 +1,7 @@
 package pe.farmaciasperuanas.digital.gcp.redis.application.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pe.farmaciasperuanas.digital.gcp.redis.application.port.in.CacheManagerService;
@@ -8,6 +10,7 @@ import pe.farmaciasperuanas.digital.gcp.redis.application.port.out.MongoService;
 import pe.farmaciasperuanas.digital.gcp.redis.application.util.ResourceConfig;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.RequestRedisDto;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.ResponseDto;
+import pe.farmaciasperuanas.digital.gcp.redis.domain.stockbackup.CoverageLocationWithBackupInfoDto;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
@@ -204,6 +207,25 @@ public class CacheManagerServiceImpl implements CacheManagerService {
     }
 
     @Override
+    public Mono<CoverageLocationWithBackupInfoDto> getHashStringDummyByKeyFromRedis(String collection, String hashKey) {
+        try {
+
+            return Optional
+                    .ofNullable(gcpRedisService.hmGet(collection, hashKey))
+                    .map(val -> Mono.just(jsonToObject(val.toString(), CoverageLocationWithBackupInfoDto.class)))
+                    .orElseGet(() -> Mono.just(new CoverageLocationWithBackupInfoDto()));
+
+        } catch (Exception e) {
+
+            log.error("Error during getting hashkey:{}",e.getMessage());
+
+            return Mono
+                    .just(new CoverageLocationWithBackupInfoDto());
+
+        }
+    }
+
+    @Override
     public Mono<ResponseDto> deleteHashKey(String collection, String hashKeys) {
 
         try {
@@ -231,5 +253,14 @@ public class CacheManagerServiceImpl implements CacheManagerService {
                     );
 
         }
+    }
+
+    public  <T> T jsonToObject(String json, Class<T> valueType) {
+        try {
+            return new ObjectMapper().readValue(json, valueType);
+        } catch (JsonProcessingException ex) {
+            log.error("jsonToObject:{} ", ex.getMessage());
+        }
+        return null;
     }
 }

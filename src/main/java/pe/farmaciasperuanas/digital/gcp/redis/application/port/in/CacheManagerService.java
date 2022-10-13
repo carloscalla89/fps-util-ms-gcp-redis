@@ -2,6 +2,7 @@ package pe.farmaciasperuanas.digital.gcp.redis.application.port.in;
 
 import pe.farmaciasperuanas.digital.gcp.redis.domain.RequestRedisDto;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.ResponseDto;
+import pe.farmaciasperuanas.digital.gcp.redis.domain.stockbackup.CoverageLocationWithBackupInfoDto;
 import reactor.core.publisher.Mono;
 
 /**
@@ -30,6 +31,7 @@ public interface CacheManagerService {
     Mono<ResponseDto> setHashStringDummyInCache(String collection, String key, RequestRedisDto requestCacheManagerDto);
     Mono<ResponseDto> getObjectByKeyFromRedis(String key);
     Mono<ResponseDto> getHashStringByKeyFromRedis(String collection, String hashKey);
+    Mono<CoverageLocationWithBackupInfoDto> getHashStringDummyByKeyFromRedis(String collection, String hashKey);
     Mono<ResponseDto> deleteHashKey(String collection, String hashKeys);
 
 }

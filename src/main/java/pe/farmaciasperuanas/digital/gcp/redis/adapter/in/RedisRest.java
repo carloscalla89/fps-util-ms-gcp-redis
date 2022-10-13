@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pe.farmaciasperuanas.digital.gcp.redis.application.port.in.CacheManagerService;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.RequestRedisDto;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.ResponseDto;
+import pe.farmaciasperuanas.digital.gcp.redis.domain.stockbackup.CoverageLocationWithBackupInfoDto;
 import reactor.core.publisher.Mono;
 
 import java.util.Base64;
@@ -83,6 +84,17 @@ public class RedisRest {
             .doOnSuccess(resp -> log.info("[END] getHashStringFromKey:{}",resp));
   }
 
+  @GetMapping("/hashes/dummy/collections/{collection}/keys/{key}")
+  public Mono<CoverageLocationWithBackupInfoDto> getHashStringDummyFromKey(@PathVariable(value="collection") String collection,
+                                                                           @PathVariable(value="key") String key) {
+
+    log.info("[START] getHashStringDummyFromKey - collection:{}, key:{}", collection, key);
+
+    return cacheManagerService
+            .getHashStringDummyByKeyFromRedis(collection,key)
+            .doOnSuccess(resp -> log.info("[END] getHashStringFromKey:{}",resp));
+  }
+
   @DeleteMapping("/hashes/collections/{collection}/keys/{keys}")
   public Mono<ResponseDto> deleteHashKey(@PathVariable(value="collection") String collection,
                                          @PathVariable(value="keys") String keys) {
@@ -100,7 +112,7 @@ public class RedisRest {
                                                      @PathVariable(value="key") String key,
                                                      @RequestBody RequestRedisDto requestCacheManagerDto) {
 
-    log.info("[START] setHashBytesInCache: collection:{}, key:{}, request:{}", collection, key, requestCacheManagerDto);
+    log.info("[START] setHashStringInCacheDummy: collection:{}, key:{}, request:{}", collection, key, requestCacheManagerDto);
 
     return cacheManagerService
             .setHashStringDummyInCache(collection,key,requestCacheManagerDto)
