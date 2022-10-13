@@ -19,7 +19,7 @@ public class ServiceTypeDto {
     private String service;
     private BigDecimal serviceCost;
     private boolean serviceNew;
-    //private Channel channel;​
+    private String channel;
     private String startHour;
     private String endHour;
     @NotNull
