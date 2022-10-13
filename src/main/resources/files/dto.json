@@ -16,10 +16,6 @@
     "ubigeoCode": "150140"
   },
   "districtCode": "014,001,030",
-  "channel": [
-    "DIGITAL",
-    "CALL"
-  ],
   "deliveriesTypes": [
     {
       "service": "AM_PM",
@@ -56,10 +52,6 @@
           "ubigeoCode": "150140"
         },
         "districtCode": "014,001,030",
-        "channel": [
-          "DIGITAL",
-          "CALL"
-        ],
         "deliveriesTypes": [
           {
             "service": "PROG",
@@ -109,10 +101,6 @@
           "ubigeoCode": "150140"
         },
         "districtCode": "014,001,030",
-        "channel": [
-          "DIGITAL",
-          "CALL"
-        ],
         "deliveriesTypes": [
           {
             "service": "EXP",
@@ -157,10 +145,6 @@
           "ubigeoCode": "150114"
         },
         "districtCode": "014,001,010",
-        "channel": [
-          "CALL",
-          "DIGITAL"
-        ],
         "deliveriesTypes": [
           {
             "service": "EXP",
