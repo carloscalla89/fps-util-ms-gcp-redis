@@ -19,7 +19,6 @@
   "deliveriesTypes": [
     {
       "service": "AM_PM",
-      "timeMeasureUnit": "MINUTE",
       "serviceCost": 13,
       "serviceNew": false,
       "channel": "CALL",
@@ -55,7 +54,6 @@
         "deliveriesTypes": [
           {
             "service": "PROG",
-            "timeMeasureUnit": "MINUTE",
             "serviceCost": 21,
             "serviceNew": false,
             "channel": "CALL",
@@ -104,7 +102,6 @@
         "deliveriesTypes": [
           {
             "service": "EXP",
-            "timeMeasureUnit": "MINUTE",
             "serviceCost": 18,
             "serviceNew": false,
             "channel": "CALL",
@@ -148,7 +145,6 @@
         "deliveriesTypes": [
           {
             "service": "EXP",
-            "timeMeasureUnit": "MINUTE",
             "serviceCost": 23,
             "serviceNew": false,
             "channel": "CALL",
@@ -162,7 +158,6 @@
           },
           {
             "service": "AM_PM",
-            "timeMeasureUnit": "MINUTE",
             "serviceCost": 25,
             "serviceNew": false,
             "channel": "CALL",

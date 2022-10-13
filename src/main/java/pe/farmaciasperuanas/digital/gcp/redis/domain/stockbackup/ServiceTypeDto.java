@@ -13,11 +13,10 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ServiceTypeDto<TimeMeasureUnit> {
+public class ServiceTypeDto {
 
     private String id;
     private String service;
-    private TimeMeasureUnit timeMeasureUnit;
     private BigDecimal serviceCost;
     private boolean serviceNew;
     //private Channel channel;​
