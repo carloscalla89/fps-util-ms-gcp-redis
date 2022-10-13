@@ -24,4 +24,5 @@ public class CoverageLocationWithBackupInfoDto {
     private List<CoverageZoneBackupInfoDto> zonesBackup;
     // TODO: Price X Zone DIGITAL - V3
     private List<ServiceTypeDto> deliveriesTypes;
+    private boolean backUpZone;
 }
