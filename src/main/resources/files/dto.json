@@ -77,8 +77,7 @@
           "cost": "21"
         }
       ],
-      "forceServiceEXP": "N",
-      "localType": null
+      "forceServiceEXP": "N"
     },
     {
       "zone": {
@@ -120,8 +119,7 @@
       "forceServiceAMPM": "N",
       "forceServicePROG": "Y",
       "serviceCost": [],
-      "forceServiceEXP": "N",
-      "localType": null
+      "forceServiceEXP": "N"
     },
     {
       "zone": {
@@ -185,8 +183,7 @@
           "cost": "25"
         }
       ],
-      "forceServiceEXP": "Y",
-      "localType": null
+      "forceServiceEXP": "Y"
     }
   ],
   "backUpZone": false
