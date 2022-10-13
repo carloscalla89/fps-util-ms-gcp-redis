@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import pe.farmaciasperuanas.digital.gcp.redis.application.port.in.CacheManagerService;
 import pe.farmaciasperuanas.digital.gcp.redis.application.port.out.GcpRedisService;
 import pe.farmaciasperuanas.digital.gcp.redis.application.port.out.MongoService;
+import pe.farmaciasperuanas.digital.gcp.redis.application.util.ResourceConfig;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.RequestRedisDto;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.ResponseDto;
 import reactor.core.publisher.Mono;
@@ -34,10 +35,14 @@ public class CacheManagerServiceImpl implements CacheManagerService {
 
     private GcpRedisService gcpRedisService;
     private MongoService mongoService;
+    private ResourceConfig resourceConfig;
 
-    public CacheManagerServiceImpl(GcpRedisService gcpRedisService, MongoService mongoService) {
+    public CacheManagerServiceImpl(GcpRedisService gcpRedisService, MongoService mongoService,
+                                   ResourceConfig resourceConfig) {
+
         this.gcpRedisService = gcpRedisService;
         this.mongoService = mongoService;
+        this.resourceConfig = resourceConfig;
     }
 
     @Override
@@ -101,6 +106,35 @@ public class CacheManagerServiceImpl implements CacheManagerService {
         try {
 
             gcpRedisService.hmSet(collection, hashKey, requestCacheManagerDto.getPayload());
+
+            return Mono
+                    .just(ResponseDto
+                            .builder()
+                            .success(true)
+                            .build()
+                    );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Error during setting the cache:{}",e.getMessage());
+
+            return Mono
+                    .just(ResponseDto
+                            .builder()
+                            .success(false)
+                            .message("Error:"+e.getMessage())
+                            .build()
+                    );
+        }
+    }
+
+    @Override
+    public Mono<ResponseDto> setHashStringDummyInCache(String collection, String hashKey, RequestRedisDto requestCacheManagerDto) {
+        try {
+
+            log.info("payload dummy:{}",resourceConfig.getStringScriptApi());
+
+            gcpRedisService.hmSet(collection, hashKey, resourceConfig.getStringScriptApi());
 
             return Mono
                     .just(ResponseDto

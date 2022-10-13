@@ -95,4 +95,17 @@ public class RedisRest {
 
   }
 
+  @PutMapping("/hashes/dummy/collections/{collection}/keys/{key}")
+  public Mono<ResponseDto> setHashStringInCacheDummy(@PathVariable(value="collection") String collection,
+                                                     @PathVariable(value="key") String key,
+                                                     @RequestBody RequestRedisDto requestCacheManagerDto) {
+
+    log.info("[START] setHashBytesInCache: collection:{}, key:{}, request:{}", collection, key, requestCacheManagerDto);
+
+    return cacheManagerService
+            .setHashStringDummyInCache(collection,key,requestCacheManagerDto)
+            .doOnSuccess(resp -> log.info("[END] setHashBytesInCache:{}",resp));
+
+  }
+
 }

@@ -1,0 +1,214 @@
+{
+  "id": "607f0abc67a8624600e95f4a",
+  "zoneId": "1010",
+  "latitude": -12.13864,
+  "longitude": -76.978924,
+  "zoneName": "SANTIAGO DE SURCO - ASTETE 1",
+  "zoneDescription": "SANTIAGO DE SURCO - ASTETE 1",
+  "inCoverage": true,
+  "fulfillmentCenterCode": "FJ7",
+  "enabled": true,
+  "deliveryServiceId": 3,
+  "location": {
+    "name": "Santiago de Surco",
+    "province": "Lima",
+    "department": "Lima",
+    "ubigeoCode": "150140"
+  },
+  "districtCode": "014,001,030",
+  "channel": [
+    "DIGITAL",
+    "CALL"
+  ],
+  "deliveriesTypes": [
+    {
+      "service": "AM_PM",
+      "timeMeasureUnit": "MINUTE",
+      "serviceCost": 13,
+      "serviceNew": false,
+      "channel": "CALL",
+      "startHour": "00:00:00",
+      "endHour": "23:30:00",
+      "segmentGap": 30,
+      "enabled": true,
+      "orderView": 3,
+      "companyCode": "IKF",
+      "serviceTypeId": "61829a46958dc6ebc59d9a95"
+    }
+  ],
+  "zonesBackup": [
+    {
+      "zone": {
+        "id": "5fc865713b55d879ffaf30e0",
+        "zoneId": "1",
+        "latitude": 0.0,
+        "longitude": 0.0,
+        "zoneName": "SANTIAGO DE SURCO - ASTETE 1",
+        "zoneDescription": "SANTIAGO DE SURCO - ASTETE 1",
+        "inCoverage": true,
+        "fulfillmentCenterCode": "GE6",
+        "enabled": true,
+        "deliveryServiceId": 3,
+        "location": {
+          "name": "Santiago de Surco",
+          "province": "Lima",
+          "department": "Lima",
+          "ubigeoCode": "150140"
+        },
+        "districtCode": "014,001,030",
+        "channel": [
+          "DIGITAL",
+          "CALL"
+        ],
+        "deliveriesTypes": [
+          {
+            "service": "PROG",
+            "timeMeasureUnit": "MINUTE",
+            "serviceCost": 21,
+            "serviceNew": false,
+            "channel": "CALL",
+            "startHour": "08:00:00",
+            "endHour": "22:00:00",
+            "segmentGap": 30,
+            "enabled": true,
+            "orderView": 1,
+            "companyCode": "IKF",
+            "serviceTypeId": "61829a46958dc6ebc59d9a93"
+          }
+        ],
+        "backUpZone": false
+      },
+      "preferableLocalBackupToShow": "Y",
+      "forceServiceAMPM": "Y",
+      "forceServicePROG": "N",
+      "serviceCost": [
+        {
+          "serviceTypeId": "61829a46958dc6ebc59d9a93",
+          "cost": "21"
+        }
+      ],
+      "forceServiceEXP": "N",
+      "localType": null
+    },
+    {
+      "zone": {
+        "id": "5fc865713b55d879ffaf30f8",
+        "zoneId": "26",
+        "latitude": 0.0,
+        "longitude": 0.0,
+        "zoneName": "SANTIAGO DE SURCO - ENCALADA 2",
+        "zoneDescription": "SANTIAGO DE SURCO - ENCALADA 2",
+        "inCoverage": true,
+        "fulfillmentCenterCode": "AK2",
+        "enabled": true,
+        "deliveryServiceId": 4,
+        "location": {
+          "name": "Santiago de Surco",
+          "province": "Lima",
+          "department": "Lima",
+          "ubigeoCode": "150140"
+        },
+        "districtCode": "014,001,030",
+        "channel": [
+          "DIGITAL",
+          "CALL"
+        ],
+        "deliveriesTypes": [
+          {
+            "service": "EXP",
+            "timeMeasureUnit": "MINUTE",
+            "serviceCost": 18,
+            "serviceNew": false,
+            "channel": "CALL",
+            "startHour": "08:00:00",
+            "endHour": "18:00:00",
+            "segmentGap": 5,
+            "enabled": true,
+            "orderView": 2,
+            "companyCode": "IKF",
+            "serviceTypeId": "61829a46958dc6ebc59d9a94"
+          }
+        ],
+        "backUpZone": false
+      },
+      "preferableLocalBackupToShow": "Y",
+      "forceServiceAMPM": "N",
+      "forceServicePROG": "Y",
+      "serviceCost": [],
+      "forceServiceEXP": "N",
+      "localType": null
+    },
+    {
+      "zone": {
+        "id": "5fc865713b55d879ffaf310d",
+        "zoneId": "47",
+        "latitude": 0.0,
+        "longitude": 0.0,
+        "zoneName": "LA MOLINA - RAUL FERRERO",
+        "zoneDescription": "LA MOLINA - RAUL FERRERO",
+        "inCoverage": true,
+        "fulfillmentCenterCode": "AK2",
+        "enabled": true,
+        "deliveryServiceId": 4,
+        "location": {
+          "name": "La Molina",
+          "province": "Lima",
+          "department": "Lima",
+          "ubigeoCode": "150114"
+        },
+        "districtCode": "014,001,010",
+        "channel": [
+          "CALL",
+          "DIGITAL"
+        ],
+        "deliveriesTypes": [
+          {
+            "service": "EXP",
+            "timeMeasureUnit": "MINUTE",
+            "serviceCost": 23,
+            "serviceNew": false,
+            "channel": "CALL",
+            "startHour": "08:00:00",
+            "endHour": "23:00:00",
+            "segmentGap": 5,
+            "enabled": true,
+            "orderView": 2,
+            "companyCode": "IKF",
+            "serviceTypeId": "61829a46958dc6ebc59d9a94"
+          },
+          {
+            "service": "AM_PM",
+            "timeMeasureUnit": "MINUTE",
+            "serviceCost": 25,
+            "serviceNew": false,
+            "channel": "CALL",
+            "startHour": "08:00:00",
+            "endHour": "20:30:00",
+            "segmentGap": 30,
+            "enabled": true,
+            "orderView": 3,
+            "companyCode": "IKF",
+            "serviceTypeId": "61829a46958dc6ebc59d9a95"
+          }
+        ],
+        "backUpZone": false
+      },
+      "preferableLocalBackupToShow": "Y",
+      "forceServiceAMPM": "N",
+      "forceServicePROG": "N",
+      "serviceCost": [
+        {
+          "serviceTypeId": "61829a46958dc6ebc59d9a94",
+          "cost": "23"
+        },
+        {
+          "serviceTypeId": "61829a46958dc6ebc59d9a95",
+          "cost": "25"
+        }
+      ],
+      "forceServiceEXP": "Y",
+      "localType": null
+    }
+  ],
+  "backUpZone": false
+}
