@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import pe.farmaciasperuanas.digital.gcp.redis.application.port.out.GcpRedisService;
 
+import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,12 @@ public class GcpRedisServiceImpl implements GcpRedisService {
     @Autowired
     public GcpRedisServiceImpl(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
+    }
+
+    @PostConstruct
+    public void init() {
+        log.info("Setting expire time in second by default...");
+        redisTemplate.expire("orders",600, TimeUnit.SECONDS);
     }
 
     @Override
@@ -131,5 +138,11 @@ public class GcpRedisServiceImpl implements GcpRedisService {
     @Override
     public Set<Object> rangeByScore(String key, double scoure, double scoure1) {
         return null;
+    }
+
+    @Override
+    public void setExpirationTime(String collection, int seconds) {
+        log.info("Setting expire time with seconds:{}",seconds);
+        redisTemplate.expire("orders",seconds, TimeUnit.SECONDS);
     }
 }

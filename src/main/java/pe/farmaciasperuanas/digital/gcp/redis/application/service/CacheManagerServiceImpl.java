@@ -255,7 +255,37 @@ public class CacheManagerServiceImpl implements CacheManagerService {
         }
     }
 
-    public  <T> T jsonToObject(String json, Class<T> valueType) {
+    @Override
+    public Mono<ResponseDto> setExpirationTime(String collection, int seconds) {
+        try {
+
+            log.info("Setting expiration using collection:{} and seconds:{}",collection, seconds);
+
+            gcpRedisService.setExpirationTime(collection, seconds);
+
+            return Mono
+                    .just(ResponseDto
+                            .builder()
+                            .success(true)
+                            .build()
+                    );
+
+
+        } catch(Exception e) {
+            log.error("Error in setExpirationTime:{}", e.getMessage());
+
+            return Mono
+                    .just(ResponseDto
+                            .builder()
+                            .success(false)
+                            .message("Error:"+e.getMessage())
+                            .build()
+                    );
+
+        }
+    }
+
+    private <T> T jsonToObject(String json, Class<T> valueType) {
         try {
             return new ObjectMapper().readValue(json, valueType);
         } catch (JsonProcessingException ex) {

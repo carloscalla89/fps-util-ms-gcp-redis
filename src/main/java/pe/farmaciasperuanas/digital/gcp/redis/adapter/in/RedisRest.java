@@ -120,4 +120,16 @@ public class RedisRest {
 
   }
 
+  @PutMapping("/hashes/collections/{collection}/expiration/{expiration}")
+  public Mono<ResponseDto> setExpirationTime(@PathVariable(value="collection") String collection,
+                                             @PathVariable(value="expiration") int expiration) {
+
+    log.info("[START] setExpirationTime: collection:{}, expiration:{}", collection, expiration);
+
+    return cacheManagerService
+            .setExpirationTime(collection,expiration)
+            .doOnSuccess(resp -> log.info("[END] deleteHashKey"));
+
+  }
+
 }

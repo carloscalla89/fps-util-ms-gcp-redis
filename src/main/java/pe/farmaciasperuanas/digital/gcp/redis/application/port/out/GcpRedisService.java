@@ -99,4 +99,6 @@ public interface GcpRedisService {
      * @return
      */
     Set<Object> rangeByScore(String key, double scoure, double scoure1);
+
+    void setExpirationTime(String collection, int seconds);
 }

@@ -33,5 +33,6 @@ public interface CacheManagerService {
     Mono<ResponseDto> getHashStringByKeyFromRedis(String collection, String hashKey);
     Mono<CoverageLocationWithBackupInfoDto> getHashStringDummyByKeyFromRedis(String collection, String hashKey);
     Mono<ResponseDto> deleteHashKey(String collection, String hashKeys);
+    Mono<ResponseDto> setExpirationTime(String collection, int seconds);
 
 }
