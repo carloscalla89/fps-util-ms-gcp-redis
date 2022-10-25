@@ -8,3 +8,13 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://root:elpreciomasbajo@clustertest.kcun4.mongodb.net/util?authSource=admin&retryWrites=true&w=majority&maxPoolSize=2500&maxIdleTimeMS=20000
+  cloud:
+    gcp:
+      project-id: fp-ci-poc
+      credentials:
+        location: classpath:gcp/ci/fp-ci-poc-4ddfd380689b.json
+    stream:
+      bindings:
+        channel_event_1:
+          destination: event.atlasmongo.topic
+          group: sub
