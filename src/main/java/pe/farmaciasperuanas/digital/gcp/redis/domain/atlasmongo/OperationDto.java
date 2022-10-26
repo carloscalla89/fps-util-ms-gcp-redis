@@ -13,5 +13,5 @@ public class OperationDto implements Serializable {
     // values: insert, delete, replace, update, drop, rename, dropDatabase, invalidate
     private String operationType;
     private String db;
-    private String collection;
+    private String coll;
 }

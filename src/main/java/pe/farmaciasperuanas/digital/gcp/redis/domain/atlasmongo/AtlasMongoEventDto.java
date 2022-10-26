@@ -2,6 +2,7 @@ package pe.farmaciasperuanas.digital.gcp.redis.domain.atlasmongo;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import pe.farmaciasperuanas.digital.gcp.redis.domain.atlasmongo.zone.ZoneDto;
 
 import java.io.Serializable;
 
@@ -29,6 +30,6 @@ public class AtlasMongoEventDto implements Serializable {
     private static final long serialVersionUID = -5792936291391193328L;
     private String id;
     private OperationDto operation;
-    private ZoneDto zone;
+    private ZoneDto collection;
 
 }
