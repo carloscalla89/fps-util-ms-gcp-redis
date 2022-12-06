@@ -10,10 +10,14 @@ import pe.farmaciasperuanas.digital.gcp.redis.application.port.out.MongoService;
 import pe.farmaciasperuanas.digital.gcp.redis.application.util.ResourceConfig;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.RequestRedisDto;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.ResponseDto;
+import pe.farmaciasperuanas.digital.gcp.redis.domain.atlasmongo.AtlasMongoEventDto;
+import pe.farmaciasperuanas.digital.gcp.redis.domain.atlasmongo.zone.ZoneDto;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.stockbackup.CoverageLocationWithBackupInfoDto;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
+
+import static pe.farmaciasperuanas.digital.gcp.redis.application.util.Constants.*;
 
 /**
  * Implement class for running Spring Boot framework.<br/>
@@ -313,6 +317,48 @@ public class CacheManagerServiceImpl implements CacheManagerService {
                     );
 
         }
+    }
+
+    @Override
+    public Mono<ResponseDto> processEventReceived(AtlasMongoEventDto atlasMongoEventDto) {
+
+        String operationType = atlasMongoEventDto.getOperation().getOperationType();
+
+        if (operationType.equalsIgnoreCase(OPERATION_TYPE_REPLACE) || operationType.equalsIgnoreCase(OPERATION_TYPE_INSERT)) {
+
+            String collection = atlasMongoEventDto.getOperation().getColl();
+
+            if (collection.equalsIgnoreCase("zone")) {
+
+                ZoneDto zoneDto = atlasMongoEventDto.getCollection();
+
+                log.info("ZoneID event:{}",zoneDto.getIdZone());
+
+                return getByPatternAndDeleteKeys(HASH_STORE_ZONE, zoneDto.getIdZone().toString());
+
+            } else {
+                return Mono
+                        .just(ResponseDto
+                                .builder()
+                                .success(false)
+                                .message("The collection event " + collection  + " is not configured to clean cache")
+                                .build()
+                        );
+            }
+
+        } else {
+            // se tiene que agregar una llamada al servicio para obtener los datos completos de un documento
+            // por objectID - carlos calla - 06-12-22
+            return Mono
+                    .just(ResponseDto
+                            .builder()
+                            .success(false)
+                            .message("The operation type event " + operationType  + " is not configured to clean cache")
+                            .build()
+                    );
+
+        }
+
     }
 
     private <T> T jsonToObject(String json, Class<T> valueType) {

@@ -2,6 +2,7 @@ package pe.farmaciasperuanas.digital.gcp.redis.application.port.in;
 
 import pe.farmaciasperuanas.digital.gcp.redis.domain.RequestRedisDto;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.ResponseDto;
+import pe.farmaciasperuanas.digital.gcp.redis.domain.atlasmongo.AtlasMongoEventDto;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.stockbackup.CoverageLocationWithBackupInfoDto;
 import reactor.core.publisher.Mono;
 
@@ -35,5 +36,6 @@ public interface CacheManagerService {
     Mono<CoverageLocationWithBackupInfoDto> getHashStringDummyByKeyFromRedis(String collection, String hashKey);
     Mono<ResponseDto> deleteHashKey(String collection, String hashKeys);
     Mono<ResponseDto> setExpirationTime(String collection, int seconds);
+    Mono<ResponseDto> processEventReceived(AtlasMongoEventDto atlasMongoEventDto);
 
 }

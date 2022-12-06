@@ -1,10 +1,14 @@
 package pe.farmaciasperuanas.digital.gcp.redis.adapter.in;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
+import pe.farmaciasperuanas.digital.gcp.redis.application.port.in.CacheManagerService;
 import pe.farmaciasperuanas.digital.gcp.redis.application.port.in.EventSubscriptionService;
 import pe.farmaciasperuanas.digital.gcp.redis.domain.atlasmongo.AtlasMongoEventDto;
+import pe.farmaciasperuanas.digital.gcp.redis.domain.atlasmongo.zone.ZoneDto;
+import reactor.core.publisher.Mono;
 
 /**
  * Implement class for running Spring Boot framework.<br/>
@@ -27,10 +31,17 @@ import pe.farmaciasperuanas.digital.gcp.redis.domain.atlasmongo.AtlasMongoEventD
 @EnableBinding(EventSubscriptionService.class)
 public class EventSubcriptionServiceImpl {
 
-    @StreamListener(EventSubscriptionService.CHANNEL_EVENT_1)
-    public void handleMessage(AtlasMongoEventDto Dto) {
+    @Autowired
+    private CacheManagerService cacheManagerService;
 
-       log.info("New message received:{}",Dto);
+    @StreamListener(EventSubscriptionService.CHANNEL_EVENT_1)
+    public void handleMessage(AtlasMongoEventDto atlasMongoEventDto) {
+
+        log.info("[START] New message received to delete caché:{}",atlasMongoEventDto);
+
+        cacheManagerService
+                .processEventReceived(atlasMongoEventDto)
+                .subscribe(resp -> log.info("[END] New message received to delete caché with response:{}",resp));
 
     }
 }
