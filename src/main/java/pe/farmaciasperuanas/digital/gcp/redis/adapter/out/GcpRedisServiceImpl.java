@@ -118,7 +118,9 @@ public class GcpRedisServiceImpl implements GcpRedisService {
     public Long hmGetByPatternAndDeleteKeys(String key, String pattern) throws Exception {
         try {
 
-            return redisTemplate.opsForHash().delete(key, hgetall(key, pattern));
+
+
+            return redisTemplate.opsForHash().delete(key, hgetall(key, pattern).toArray());
 
         } catch (Exception e) {
             if(e.getMessage() == null){
