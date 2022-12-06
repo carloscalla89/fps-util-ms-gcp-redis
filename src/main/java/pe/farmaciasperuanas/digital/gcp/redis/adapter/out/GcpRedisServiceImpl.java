@@ -115,14 +115,10 @@ public class GcpRedisServiceImpl implements GcpRedisService {
     }
 
     @Override
-    public void hmGetByPattern(String key, String pattern) throws Exception {
-        log.info("hmGetByPattern");
+    public Long hmGetByPatternAndDeleteKeys(String key, String pattern) throws Exception {
         try {
 
-            hgetall(key, pattern).forEach(k -> {
-                log.info("key:{}",k);
-            });
-
+            return redisTemplate.opsForHash().delete(key, hgetall(key, pattern));
 
         } catch (Exception e) {
             if(e.getMessage() == null){
@@ -137,11 +133,10 @@ public class GcpRedisServiceImpl implements GcpRedisService {
             }
 
         }
+
     }
 
-    public List<String> hgetall(String key, String pattern) {
-
-        log.info("test hgetall");
+    private List<String> hgetall(String key, String pattern) {
 
         return (List<String>) redisTemplate.execute((RedisCallback<List<String>>) con -> {
 
@@ -150,20 +145,17 @@ public class GcpRedisServiceImpl implements GcpRedisService {
                 return new ArrayList<>(0);
             }
 
-            Map<String, Object> ans = new HashMap<>(result.size());
             List<String> listKeys = new ArrayList<>();
 
             for (Map.Entry<byte[], byte[]> entry : result.entrySet()) {
 
                 String keyVal = new String(entry.getKey());
 
-                log.info("key from cache:{}",keyVal);
-
                 if (keyVal.contains(pattern)) {
                     log.info("key:{} containt pattern:{}", keyVal, pattern);
-                }
 
-                listKeys.add(new String(entry.getKey()));
+                    listKeys.add(new String(entry.getKey()));
+                }
 
             }
             return listKeys;

@@ -207,20 +207,31 @@ public class CacheManagerServiceImpl implements CacheManagerService {
     }
 
     @Override
-    public Mono<ResponseDto> getHashStringByKeyFromPattern(String collection, String pattern) {
+    public Mono<ResponseDto> getByPatternAndDeleteKeys(String collection, String pattern) {
 
         try {
 
-            gcpRedisService.hmGetByPattern(collection, pattern);
+            Long resp = gcpRedisService.hmGetByPatternAndDeleteKeys(collection, pattern);
 
-            return Mono.just(ResponseDto.builder().cacheHit(true).build());
-
-        } catch (Exception e) {
-
-            log.error("Error during getting getHashStringByKeyFromPattern:{}",e.getMessage());
+            log.info("response about getByPatternAndDeleteKeys:{}",resp);
 
             return Mono
-                    .just(ResponseDto.builder().cacheHit(false).message(e.getMessage()).build());
+                    .just(ResponseDto
+                            .builder()
+                            .success(true)
+                            .build()
+                    );
+
+        } catch(Exception e){
+            log.error("Error during delete hashkey:{}",e.getMessage());
+
+            return Mono
+                    .just(ResponseDto
+                            .builder()
+                            .success(false)
+                            .message("Error:"+e.getMessage())
+                            .build()
+                    );
 
         }
     }

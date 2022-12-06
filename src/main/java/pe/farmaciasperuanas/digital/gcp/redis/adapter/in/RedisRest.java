@@ -85,14 +85,14 @@ public class RedisRest {
   }
 
   @GetMapping("/hashes/collections/{collection}/patterns/{pattern}")
-  public Mono<ResponseDto> getHashStringFromPattern(@PathVariable(value="collection") String collection,
+  public Mono<ResponseDto> getByPatternAndDeleteKeys(@PathVariable(value="collection") String collection,
                                                     @PathVariable(value="pattern") String pattern) {
 
-    log.info("[START] getHashStringFromPattern - collection:{}, pattern:{}", collection, pattern);
+    log.info("[START] getByPatternAndDeleteKeys - collection:{}, pattern:{}", collection, pattern);
 
     return cacheManagerService
-            .getHashStringByKeyFromPattern(collection,pattern)
-            .doOnSuccess(resp -> log.info("[END] getHashStringFromPattern:{}",resp));
+            .getByPatternAndDeleteKeys(collection,pattern)
+            .doOnSuccess(resp -> log.info("[END] getByPatternAndDeleteKeys:{}",resp));
   }
 
   @GetMapping("/hashes/dummy/collections/{collection}/keys/{key}")

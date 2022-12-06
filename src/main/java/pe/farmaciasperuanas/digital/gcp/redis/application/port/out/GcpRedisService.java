@@ -59,7 +59,7 @@ public interface GcpRedisService {
      * @param pattern
      * @return
      */
-    void hmGetByPattern(String collection, String pattern) throws Exception;
+    Long hmGetByPatternAndDeleteKeys(String collection, String pattern) throws Exception;
 
     /**
      * Lista agregada
