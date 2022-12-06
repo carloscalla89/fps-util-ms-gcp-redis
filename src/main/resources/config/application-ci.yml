@@ -17,4 +17,4 @@ spring:
       bindings:
         channel_event_1:
           destination: event.atlasmongo.topic
-          group: sub
+          group: redis.sub

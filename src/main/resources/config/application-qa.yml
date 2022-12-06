@@ -12,9 +12,9 @@ spring:
     gcp:
       project-id: fp-ci-poc
       credentials:
-        location: classpath:gcp/ci/fp-ci-poc-4ddfd380689b.json
+        location: classpath:gcp/qa/fp-serverless-qa-project-84aa081dd49c.json
     stream:
       bindings:
         channel_event_1:
           destination: event.atlasmongo.topic
-          group: sub
+          group: redis.sub
