@@ -119,6 +119,7 @@ public class GcpRedisServiceImpl implements GcpRedisService {
 
     @Override
     public void hmGetByPattern(String key, String pattern) throws Exception {
+        log.info("hmGetByPattern");
         try {
 
             hgetall(key).forEach((k,v) -> {
@@ -141,6 +142,9 @@ public class GcpRedisServiceImpl implements GcpRedisService {
     }
 
     public Map<String, Object> hgetall(String key) {
+
+        log.info("test hgetall");
+
         return (Map<String, Object>) redisTemplate.execute((RedisCallback<Map<String, Object>>) con -> {
 
             Map<byte[], byte[]> result = con.hGetAll(key.getBytes());
