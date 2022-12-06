@@ -119,7 +119,7 @@ public class GcpRedisServiceImpl implements GcpRedisService {
         log.info("hmGetByPattern");
         try {
 
-            hgetall(key).forEach(k -> {
+            hgetall(key, pattern).forEach(k -> {
                 log.info("key:{}",k);
             });
 
@@ -139,7 +139,7 @@ public class GcpRedisServiceImpl implements GcpRedisService {
         }
     }
 
-    public List<String> hgetall(String key) {
+    public List<String> hgetall(String key, String pattern) {
 
         log.info("test hgetall");
 
@@ -155,7 +155,13 @@ public class GcpRedisServiceImpl implements GcpRedisService {
 
             for (Map.Entry<byte[], byte[]> entry : result.entrySet()) {
 
-                log.info("key from cache:{}",new String(entry.getKey()));
+                String keyVal = new String(entry.getKey());
+
+                log.info("key from cache:{}",keyVal);
+
+                if (keyVal.contains(pattern)) {
+                    log.info("key:{} containt pattern:{}", keyVal, pattern);
+                }
 
                 listKeys.add(new String(entry.getKey()));
 
