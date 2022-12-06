@@ -207,6 +207,25 @@ public class CacheManagerServiceImpl implements CacheManagerService {
     }
 
     @Override
+    public Mono<ResponseDto> getHashStringByKeyFromPattern(String collection, String pattern) {
+
+        try {
+
+            gcpRedisService.hmGetByPattern(collection, pattern);
+
+            return Mono.just(ResponseDto.builder().cacheHit(true).build());
+
+        } catch (Exception e) {
+
+            log.error("Error during getting getHashStringByKeyFromPattern:{}",e.getMessage());
+
+            return Mono
+                    .just(ResponseDto.builder().cacheHit(false).message(e.getMessage()).build());
+
+        }
+    }
+
+    @Override
     public Mono<CoverageLocationWithBackupInfoDto> getHashStringDummyByKeyFromRedis(String collection, String hashKey) {
         try {
 

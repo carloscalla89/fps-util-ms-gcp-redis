@@ -54,6 +54,14 @@ public interface GcpRedisService {
     Object hmGet(String collection, String hashKey) throws Exception;
 
     /**
+     * Hash para obtener datos
+     * @param collection
+     * @param pattern
+     * @return
+     */
+    void hmGetByPattern(String collection, String pattern) throws Exception;
+
+    /**
      * Lista agregada
      * @param k
      * @param v

@@ -84,6 +84,17 @@ public class RedisRest {
             .doOnSuccess(resp -> log.info("[END] getHashStringFromKey:{}",resp));
   }
 
+  @GetMapping("/hashes/collections/{collection}/patterns/{pattern}")
+  public Mono<ResponseDto> getHashStringFromPattern(@PathVariable(value="collection") String collection,
+                                                    @PathVariable(value="pattern") String pattern) {
+
+    log.info("[START] getHashStringFromPattern - collection:{}, pattern:{}", collection, pattern);
+
+    return cacheManagerService
+            .getHashStringByKeyFromPattern(collection,pattern)
+            .doOnSuccess(resp -> log.info("[END] getHashStringFromPattern:{}",resp));
+  }
+
   @GetMapping("/hashes/dummy/collections/{collection}/keys/{key}")
   public Mono<CoverageLocationWithBackupInfoDto> getHashStringDummyFromKey(@PathVariable(value="collection") String collection,
                                                                            @PathVariable(value="key") String key) {

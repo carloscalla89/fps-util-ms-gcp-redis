@@ -2,14 +2,21 @@ package pe.farmaciasperuanas.digital.gcp.redis.adapter.out;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import pe.farmaciasperuanas.digital.gcp.redis.application.port.out.GcpRedisService;
 
 import javax.annotation.PostConstruct;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -109,6 +116,65 @@ public class GcpRedisServiceImpl implements GcpRedisService {
 
         }
     }
+
+    @Override
+    public void hmGetByPattern(String key, String pattern) throws Exception {
+        try {
+
+            hgetall(key).forEach((k,v) -> {
+                log.info("key:{},value:{}",k,v);
+            });
+
+        } catch (Exception e) {
+            if(e.getMessage() == null){
+                log.error("Entry '{}' does not exist in cache", key);
+
+                throw new Exception("Entry " + key +" does not exist in cache");
+
+            } else {
+                log.error("Unable to find entry '{}' in cache pattern '{}': {}", key, pattern, e.getMessage());
+
+                throw new Exception("Unable to find entry " + key + " in cache pattern " + pattern + ": " + e.getMessage());
+            }
+
+        }
+    }
+
+    public Map<String, Object> hgetall(String key) {
+        return (Map<String, Object>) redisTemplate.execute((RedisCallback<Map<String, Object>>) con -> {
+
+            Map<byte[], byte[]> result = con.hGetAll(key.getBytes());
+            if (CollectionUtils.isEmpty(result)) {
+                return new HashMap<>(0);
+            }
+
+            Map<String, Object> ans = new HashMap<>(result.size());
+
+            for (Map.Entry<byte[], byte[]> entry : result.entrySet()) {
+
+                log.info("key from cache:{}",new String(entry.getKey()));
+
+                ByteArrayInputStream in = new ByteArrayInputStream(entry.getValue());
+                ObjectInputStream is = null;
+                try {
+                    is = new ObjectInputStream(in);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    ans.put(new String(entry.getKey()), is.readObject());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            return ans;
+        });
+    }
+
+
 
     @Override
     public void lPush(String k, Object v) {
