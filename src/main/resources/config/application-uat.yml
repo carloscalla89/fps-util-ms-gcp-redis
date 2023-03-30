@@ -12,7 +12,7 @@ spring:
     gcp:
       project-id: fp-serverless-uat-project
       credentials:
-        location: classpath:gcp/qa/fp-serverless-uat-project-89a171267e90.json
+        location: classpath:gcp/uat/fp-serverless-uat-project-89a171267e90.json
     stream:
       bindings:
         channel_event_1:
