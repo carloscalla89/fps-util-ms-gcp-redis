@@ -1,0 +1,20 @@
+spring:
+  cache:
+    type: redis
+  redis:
+    host: 10.191.3.3
+    port: 6379
+    database: 0
+  data:
+    mongodb:
+      uri: mongodb+srv://root:elpreciomasbajo@clustertest.kcun4.mongodb.net/util?authSource=admin&retryWrites=true&w=majority&maxPoolSize=2500&maxIdleTimeMS=20000
+  cloud:
+    gcp:
+      project-id: fp-serverless-uat-project
+      credentials:
+        location: classpath:gcp/qa/fp-serverless-uat-project-89a171267e90.json
+    stream:
+      bindings:
+        channel_event_1:
+          destination: event.atlasmongo.topic
+          group: redis.sub
